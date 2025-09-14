@@ -13,11 +13,5 @@ def test_second_credit_card():
     b = 6
     assert a + 2 == b
 
-@pytest.fixture()
-def setup():
-    print("I will be executed first")
-    yield
-    print("I will be executed last")
-
 def test_fixture_demo(setup):
     print("Hallo")
