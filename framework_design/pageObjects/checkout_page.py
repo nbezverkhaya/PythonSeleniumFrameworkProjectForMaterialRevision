@@ -19,8 +19,8 @@ class CheckoutPage:
         time.sleep(1)
         self.driver.find_element(*self.checkout_btn).click()
 
-    def enter_delivery_address(self, first_letters, country):
-        self.driver.find_element(*self.country_input).send_keys(first_letters)
+    def enter_delivery_address(self, country_query, country):
+        self.driver.find_element(*self.country_input).send_keys(country_query)
         wait = WebDriverWait(self.driver, 7)
         wait.until(expected_conditions.visibility_of_element_located((By.LINK_TEXT, country)))
         self.driver.find_element(By.LINK_TEXT, country).click()

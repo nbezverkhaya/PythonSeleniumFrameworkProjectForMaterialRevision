@@ -1,18 +1,22 @@
-import time
+import json
+
+import pytest
 
 from pageObjects.login_page import LoginPage
 
+test_data_path ='../framework_design/data/test_e2e.json'
+with open(test_data_path) as f:
+    test_data = json.load(f)
+    test_list = test_data["data"]
 
-def test_e2e(browser_instance):
+
+@pytest.mark.parametrize("test_list_item", test_list)
+def test_e2e(browser_instance, test_list_item):
     driver = browser_instance
-    driver.get("https://rahulshettyacademy.com/loginpagePractise/")
     login_page = LoginPage(driver)
-    shop_page = login_page.login()
-    shop_page.add_product_to_cart("Blackberry")
+    shop_page = login_page.login(test_list_item["userEmail"], test_list_item["userPassword"])
+    shop_page.add_product_to_cart(test_list_item["productName"])
     checkout_page = shop_page.go_to_cart()
-    time.sleep(1)
     checkout_page.checkout()
-    checkout_page.enter_delivery_address("st", "Austria")
+    checkout_page.enter_delivery_address(test_list_item["country_query"], test_list_item["country"])
     checkout_page.validate_order()
-
-    time.sleep(4)
