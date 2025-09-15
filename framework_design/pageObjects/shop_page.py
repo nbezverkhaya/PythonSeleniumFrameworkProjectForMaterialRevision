@@ -2,9 +2,12 @@ from selenium.webdriver.common.by import By
 
 from pageObjects.checkout_page import CheckoutPage
 
+from utils.browser_utils import BrowserUtils
 
-class ShopPage:
+
+class ShopPage(BrowserUtils):
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
         self.product_list = (By.CSS_SELECTOR, ".card.h-100")
         self.checkout_btn =(By.CSS_SELECTOR, ".nav-link.btn.btn-primary")
